@@ -1,5 +1,7 @@
+using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace IisHostService
 {
@@ -10,12 +12,22 @@ namespace IisHostService
             CreateHostBuilder(args).Build().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            var assemblyName = typeof(Startup).GetTypeInfo().Assembly.FullName;
+
+            return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                     webBuilder
-                        .UseStartup<Startup>()
+                        .UseStartup(assemblyName)
+                        //.UseStartup<Startup>()
                         .CaptureStartupErrors(true)
-                );
+                )
+                .ConfigureLogging(logging =>
+                {
+                    logging.AddConsole();
+                })
+                ;
+        }
     }
 }
