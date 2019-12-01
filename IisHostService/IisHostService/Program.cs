@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.Hosting;
 
 namespace IisHostService
@@ -31,11 +29,6 @@ namespace IisHostService
                 .ConfigureAppConfiguration((hostBuilderContext, configurationBuilder) =>
                 {
                     configurationBuilder.AddCommandLine(args);
-                })
-                .ConfigureWebHostDefaults(webBuilder =>
-                    webBuilder
-                        .UseStartup<Startup>()
-                        .CaptureStartupErrors(true)
-                );
+                });
     }
 }

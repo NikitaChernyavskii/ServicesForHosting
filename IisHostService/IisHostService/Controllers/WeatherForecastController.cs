@@ -16,7 +16,7 @@ namespace IisHostService.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger _logger;
 
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
@@ -26,6 +26,9 @@ namespace IisHostService.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            _logger.LogError("some Error {1}, {2}", 21144, "asdad");
+            _logger.LogError("some Error {1}, {2}");
+
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
